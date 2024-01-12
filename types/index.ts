@@ -1,17 +1,17 @@
 // USER
 export type CreateUserParams = {
     clerkId: string,
+    username: string,
     firstName: string,
     lastName: string,
-    userName: string,
     email: string,
     image: string
 }
 
 export type UpdateUserParams = {
+    username: string
     firstName: string,
     lastName: string,
-    userName: string
     image: string
 }
 
