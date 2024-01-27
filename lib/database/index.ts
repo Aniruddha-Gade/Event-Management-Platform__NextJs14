@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+require('dotenv').config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
+// console.log("MONGODB_URI === ", MONGODB_URI)
 
 let cached = (global as any).mongoose || { conn: null, promise: null };
 
