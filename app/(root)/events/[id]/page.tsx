@@ -9,6 +9,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
     // get event data by ID
     const event = await getEventDetailsById(id);
+    console.log("Event details => ", event)
 
 
 

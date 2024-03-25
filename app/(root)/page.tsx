@@ -1,9 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import Collection from '@/components/shared/Collection'
+import { getAllEvents } from '@/lib/actions/event.actions'
 
 
-export default function Home() {
+export default async function Home() {
+
+  const allEvents = await getAllEvents({
+    query: '',
+    category: '',
+    limit: 6,
+    page: 1
+  })
+
+  // console.log("Events Data => ", allEvents)
+
   return (
     <div>
 
@@ -50,6 +62,16 @@ export default function Home() {
           categoryFilter
 
         </div>
+
+        <Collection
+          data={allEvents?.data}
+          emptyTitle={'No Events Found'}
+          emptyStateSubText={"Come back later"}
+          collectionType={'All_Events'}
+          limit={6}
+          page={1}
+          totalPages={allEvents?.totalPages}
+        />
 
       </section>
 
