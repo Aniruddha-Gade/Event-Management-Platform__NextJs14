@@ -8,6 +8,10 @@ export const headerLinks = [
     route: '/events/create',
   },
   {
+    label: 'Search',
+    route: '/events/find',
+  },
+  {
     label: 'My Profile',
     route: '/profile',
   },
@@ -17,8 +21,8 @@ export const eventDefaultValues = {
   title: '',
   description: '',
   location: '',
-  eventLatitude:'0',
-  eventLongitude: '0',
+  eventLatitude: '',
+  eventLongitude: '',
   imageUrl: '',
   startDateTime: new Date(),
   endDateTime: new Date(),
@@ -26,4 +30,10 @@ export const eventDefaultValues = {
   price: '',
   isFree: false,
   url: '',
+}
+
+export const searchEventDefaultValues = {
+  date: new Date(),
+  userLatitude: '',
+  userLongitude: '',
 }
