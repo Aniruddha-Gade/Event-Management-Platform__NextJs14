@@ -38,6 +38,9 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
     const [files, setFiles] = useState<File[]>([])
     const [startDate, setStartDate] = useState(new Date());
+
+
+
     const initialValues = eventDefaultValues;
     const { startUpload } = useUploadThing('imageUploader')
     const router = useRouter()
@@ -48,35 +51,56 @@ const EventForm = ({ userId, type }: EventFormProps) => {
         defaultValues: initialValues
     })
 
+    // handle location acesss
+    const handleLocationAccess = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    // console.log(`latitude = ${latitude} , longitude = ${longitude}`)
+
+                    // Set latitude and longitude in form data
+                    form.setValue("eventLatitude", latitude.toString());
+                    form.setValue("eventLongitude", longitude.toString());
+                },
+                (error) => {
+                    console.error('Error getting location:', error.message);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    };
+
+
     // submit handler
     async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-        console.log(values)
-        const eventDate = values;
+        console.log("submited form values => ", values)
         let uploadImageUrl = values.imageUrl;
 
-        if (files.length > 0) {
-            const uploadImages = await startUpload(files)
-            if (!uploadImages) { return }
+        // if (files.length > 0) {
+        //     const uploadImages = await startUpload(files)
+        //     if (!uploadImages) { return }
 
-            uploadImageUrl = uploadImages[0].url;
-        }
+        //     uploadImageUrl = uploadImages[0].url;
+        // }
 
-        if (type === 'Create') {
-            try {
-                const newEvent = await createEvent({
-                    event: { ...values, imageUrl: uploadImageUrl },
-                    userId,
-                    path: '/profile'
-                });
-                console.log("Event created successfully 🎉", newEvent)
-                if (newEvent) {
-                    form.reset();
-                    router.push(`/events/${newEvent._id}`)
-                }
-            } catch (error) {
-                console.log('Error while creating event:', error);
-            }
-        }
+        // if (type === 'Create') {
+        //     try {
+        //         const newEvent = await createEvent({
+        //             event: { ...values, imageUrl: uploadImageUrl },
+        //             userId,
+        //             path: '/profile'
+        //         });
+        //         console.log("Event created successfully 🎉", newEvent)
+        //         if (newEvent) {
+        //             form.reset();
+        //             router.push(`/events/${newEvent._id}`)
+        //         }
+        //     } catch (error) {
+        //         console.log('Error while creating event:', error);
+        //     }
+        // }
 
 
     }
@@ -150,7 +174,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                 </div>
 
                 {/* location */}
-                <div className='flex flex-col gap-5 md:flex-row '>
+                <div className='flex flex-col gap-5 md:gap-3 md:flex-row '>
                     <FormField
                         control={form.control}
                         name="location"
@@ -165,13 +189,63 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                                             alt='location'
                                         />
 
-                                        <Input placeholder="Event location or online" {...field} className='input-field' />
+                                        <Input placeholder="Event location" {...field} className='input-field' />
                                     </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
+                    {/* latitude, longitude */}
+                    <div className='flex-center flex-co gap-2 md:flex-row '>
+                        <FormField
+                            control={form.control}
+                            name="eventLatitude"
+                            render={({ field }) => (
+                                <FormItem className='w-full'>
+                                    <FormControl>
+                                        <div className='flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2'>
+                                            <Input
+                                                {...field}
+                                                type="number"
+                                                placeholder="latitude"
+                                                className='input-field'
+                                            />
+                                        </div>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="eventLongitude"
+                            render={({ field }) => (
+                                <FormItem className='w-full'>
+                                    <FormControl>
+                                        <div className='flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2'>
+                                            <Input
+                                                {...field}
+                                                type="number"
+                                                placeholder="longitude"
+                                                className='input-field' />
+                                        </div>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button
+                            type="button"
+                            size='default'
+                            disabled={form.formState.isSubmitting}
+                            onClick={handleLocationAccess}
+                        >
+                            Get location
+                        </Button>
+                    </div>
                 </div>
 
                 {/* start date */}

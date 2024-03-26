@@ -5,7 +5,9 @@ export interface IEvent extends Document {
     _id: string;
     title: string;
     description?: string;
-    location?: string;
+    location: string;
+    eventLatitude:string,
+    eventLongitude:string,
     createdAt: Date;
     imageUrl: string;
     startDateTime: Date;
@@ -28,6 +30,12 @@ const eventSchema = new mongoose.Schema({
     },
     location: {
         type: String,
+    },
+    eventLatitude: {
+        type: String
+    },
+    eventLongitude: {
+        type: String
     },
     imageUrl: {
         type: String,

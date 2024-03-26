@@ -17,6 +17,8 @@ export const eventDefaultValues = {
   title: '',
   description: '',
   location: '',
+  eventLatitude:'0',
+  eventLongitude: '0',
   imageUrl: '',
   startDateTime: new Date(),
   endDateTime: new Date(),
