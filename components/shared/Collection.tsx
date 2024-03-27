@@ -18,7 +18,7 @@ type CollectionProps = {
 
 const Collection = ({ data, emptyTitle, emptyStateSubText, collectionType, limit, page, totalPages }: CollectionProps) => {
 
-    console.log("Collection Data =>", data)
+    // console.log("Collection Data =>", data)
 
     return (
         <>
