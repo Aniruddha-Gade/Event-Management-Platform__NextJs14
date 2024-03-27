@@ -11,11 +11,9 @@ import { revalidatePath } from "next/cache";
 import axios from 'axios';
 
 // external api
-const weatherApiCode = process.env.WEATHER_API_CODE;
-const distanceApiCode = process.env.DISTANCE_API_CODE;
+const weatherApiUrl = process.env.WEATHER_API_URL;
+const distanceApiUrl = process.env.DISTANCE_API_URL;
 
-const weatherApiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Weather?code=${weatherApiCode}`;
-const distanceApiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Distance?code=${distanceApiCode}`;
 
 
 // create Event
