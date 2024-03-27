@@ -1,12 +1,14 @@
 "use server";
 
-import { CreateEventParams, DeleteEventParams, GetAllEventsParams } from "@/types";
+import { CreateEventParams, DeleteEventParams, GetAllEventsParams, getEventsBySearchParams } from "@/types";
 import { connectToDatabase } from "@/lib/database";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
 import Category from "@/lib/database/models/category.model";
 import { handleError } from "../utils";
 import { revalidatePath } from "next/cache";
+
+import axios from 'axios';
 
 
 // create Event
@@ -18,7 +20,10 @@ export const createEvent = async ({
     try {
         await connectToDatabase();
 
+        console.log(`event  = ${event} , userId = ${userId} , path = ${path}`)
+
         const organizer = await User.findById(userId);
+        console.log("organizer = ", organizer)
         if (!organizer) {
             throw new Error("Organizer not found");
         }
@@ -33,7 +38,7 @@ export const createEvent = async ({
         console.log("Event sent data =  ", newEvent);
         return JSON.parse(JSON.stringify(newEvent));
     } catch (error) {
-        console.log("Erro while creating event ");
+        console.log("Error while creating event ");
         handleError(error);
     }
 };
@@ -126,3 +131,113 @@ export async function deleteEvent({ eventId, path }: DeleteEventParams) {
     }
 }
 
+
+// querying events within the next 14 days from the specified date
+async function findEvents(date: Date) {
+    try {
+        await connectToDatabase();
+        const startDate = new Date(date);
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 14);
+
+        // console.log({
+        //     startDate:startDate,
+        //     endDate:endDate
+        // })
+
+        const events = await Event.find({
+            startDateTime: { $gte: startDate, $lte: endDate }
+        }).sort({ startDateTime: 1 }); // Sort in ascending order of startDateTime
+
+        return events;
+    } catch (error) {
+        console.log('Error querying events from the database = ', error);
+    }
+}
+
+// retrieve weather data for the specified city and date
+async function getWeather(city: string, date: Date) {
+    try {
+        // console.log(({
+        //     city:city,
+        //     date:date
+        // }))
+
+        const apiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Weather?code=KfQnTWHJbg1giyB_Q9Ih3Xu3L9QOBDTuU5zwqVikZepCAzFut3rqsg==&city=${encodeURIComponent(city)}&date=${date}`;
+
+        const response = await axios.get(apiUrl);
+        // console.log(`weather of ${city} => `, response.data.weather)
+        return response.data.weather;
+
+    } catch (error) {
+        console.log('Error retrieving weather data = ', error);
+    }
+}
+
+//  calculate the distance between the two locations
+async function calculateDistance(userLatitude: string, userLongitude: string, eventLatitude: string, eventLongitude: string) {
+    try {
+        // console.log({
+        //     userLatitude: userLatitude, userLongitude: userLongitude, eventLongitude: eventLongitude, eventLatitude: eventLatitude
+        // })
+        const apiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Distance?code=IAKvV2EvJa6Z6dEIUqqd7yGAu7IZ8gaH-a0QO6btjRc1AzFu8Y3IcQ==&latitude1=${userLatitude}&longitude1=${userLongitude}&latitude2=${eventLatitude}&longitude2=${eventLongitude}`;
+
+        const response = await axios.get(apiUrl);
+        // console.log("distance  = ", response.data.distance)
+        return response.data.distance;
+
+    } catch (error) {
+        console.log('Error while calculating distance =', error);
+    }
+}
+
+
+// get Events By Search
+export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchParams) => {
+    try {
+        // console.log("searchFormValues = ", searchFormValues)
+        const { userLatitude, userLongitude, date } = searchFormValues;
+
+        const events = await findEvents(date);
+        // console.log("response events = ", events)
+
+        // For each event, make external API calls to get weather and calculate distance
+        let eventDetailsPromises: Promise<any>[] = []
+        if (events) {
+            eventDetailsPromises = events.map(async (event) => {
+                const weather = await getWeather(event.location, event.startDateTime);
+                const distance = await calculateDistance(userLatitude, userLongitude, event.eventLatitude, event.eventLongitude);
+
+                console.log({
+                    weather: weather,
+                    distance: distance,
+                })
+
+                return {
+                    event_name: event.title,
+                    city_name: event.location,
+                    date: event.startDateTime,
+                    weather,
+                    distance_km: distance,
+                };
+            })
+        }
+
+        // Wait for all API calls to complete
+        const eventDetails = await Promise.all(eventDetailsPromises);
+
+        const response = {
+            events: eventDetails,
+            page: 1,
+            pageSize: 10,
+            totalEvents: eventDetails.length,
+            totalPages: Math.ceil(eventDetails.length / 10),
+        };
+
+        // Send the response
+        console.log("final response = ", response)
+        return response.events
+    } catch (error) {
+
+    }
+}
