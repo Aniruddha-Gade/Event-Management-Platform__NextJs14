@@ -157,3 +157,11 @@ export type getEventsBySearchParams = {
         date: Date
     }
 }
+
+export type EventData = {
+    event_name: string;
+    city_name: string;
+    date: Date;
+    weather: string;
+    distance_km: string;
+}

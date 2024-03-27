@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as z from "zod"
@@ -15,11 +14,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { searchEventDefaultValues } from '../../constants/index'
 import { searchEventFormSchema } from '@/lib/validator'
 import { getEventsBySearch } from "@/lib/actions/event.actions"
-
+import { useSearchEventContext } from "@/app/context/searchEventContext"
 
 
 
 const SearchEventForm = () => {
+
+    const { setSearchEventLoading, setSearchEventData } = useSearchEventContext()
 
     const initialValues = searchEventDefaultValues;
 
@@ -52,11 +53,19 @@ const SearchEventForm = () => {
     // handle form SUBMIT
     async function onSubmit(values: z.infer<typeof searchEventFormSchema>) {
         // console.log("submited search-form values => ", values)
+        setSearchEventLoading(true)
+
         const data = await getEventsBySearch({
             searchFormValues: { ...values }
         })
-
-        console.log("searched data => ", data)
+        if (data) {
+            setSearchEventData(data);
+            // console.log("searched data => ", data)
+        } else {
+            setSearchEventData([]);
+            console.log("Data not found")
+        }
+        setSearchEventLoading(false)
     }
 
 
