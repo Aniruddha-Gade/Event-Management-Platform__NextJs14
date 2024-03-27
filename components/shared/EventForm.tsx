@@ -78,29 +78,29 @@ const EventForm = ({ userId, type }: EventFormProps) => {
         console.log("submited form values => ", values)
         let uploadImageUrl = values.imageUrl;
 
-        // if (files.length > 0) {
-        //     const uploadImages = await startUpload(files)
-        //     if (!uploadImages) { return }
+        if (files.length > 0) {
+            const uploadImages = await startUpload(files)
+            if (!uploadImages) { return }
 
-        //     uploadImageUrl = uploadImages[0].url;
-        // }
+            uploadImageUrl = uploadImages[0].url;
+        }
 
-        // if (type === 'Create') {
-        //     try {
-        //         const newEvent = await createEvent({
-        //             event: { ...values, imageUrl: uploadImageUrl },
-        //             userId,
-        //             path: '/profile'
-        //         });
-        //         console.log("Event created successfully 🎉", newEvent)
-        //         if (newEvent) {
-        //             form.reset();
-        //             router.push(`/events/${newEvent._id}`)
-        //         }
-        //     } catch (error) {
-        //         console.log('Error while creating event:', error);
-        //     }
-        // }
+        if (type === 'Create') {
+            try {
+                const newEvent = await createEvent({
+                    event: { ...values, imageUrl: uploadImageUrl },
+                    userId,
+                    path: '/profile'
+                });
+                console.log("Event created successfully 🎉", newEvent)
+                if (newEvent) {
+                    form.reset();
+                    router.push(`/events/${newEvent._id}`)
+                }
+            } catch (error) {
+                console.log('Error while creating event:', error);
+            }
+        }
 
 
     }
