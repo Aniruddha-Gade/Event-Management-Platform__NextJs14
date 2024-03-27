@@ -10,6 +10,13 @@ import { revalidatePath } from "next/cache";
 
 import axios from 'axios';
 
+// external api
+const weatherApiCode = process.env.WEATHER_API_CODE;
+const distanceApiCode = process.env.DISTANCE_API_CODE;
+
+const weatherApiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Weather?code=${weatherApiCode}`;
+const distanceApiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Distance?code=${distanceApiCode}`;
+
 
 // create Event
 export const createEvent = async ({
@@ -163,7 +170,7 @@ async function getWeather(city: string, date: Date) {
         //     date:date
         // }))
 
-        const apiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Weather?code=KfQnTWHJbg1giyB_Q9Ih3Xu3L9QOBDTuU5zwqVikZepCAzFut3rqsg==&city=${encodeURIComponent(city)}&date=${date}`;
+        const apiUrl = `${weatherApiUrl}&city=${encodeURIComponent(city)}&date=${date}`;
 
         const response = await axios.get(apiUrl);
         // console.log(`weather of ${city} => `, response.data.weather)
@@ -180,7 +187,7 @@ async function calculateDistance(userLatitude: string, userLongitude: string, ev
         // console.log({
         //     userLatitude: userLatitude, userLongitude: userLongitude, eventLongitude: eventLongitude, eventLatitude: eventLatitude
         // })
-        const apiUrl = `https://gg-backend-assignment.azurewebsites.net/api/Distance?code=IAKvV2EvJa6Z6dEIUqqd7yGAu7IZ8gaH-a0QO6btjRc1AzFu8Y3IcQ==&latitude1=${userLatitude}&longitude1=${userLongitude}&latitude2=${eventLatitude}&longitude2=${eventLongitude}`;
+        const apiUrl = `${distanceApiUrl}&latitude1=${userLatitude}&longitude1=${userLongitude}&latitude2=${eventLatitude}&longitude2=${eventLongitude}`;
 
         const response = await axios.get(apiUrl);
         // console.log("distance  = ", response.data.distance)
