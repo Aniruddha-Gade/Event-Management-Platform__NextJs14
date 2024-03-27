@@ -149,3 +149,11 @@ export type SearchParamProps = {
     params: { id: string }
     searchParams: { [key: string]: string | string[] | undefined }
 }
+
+export type getEventsBySearchParams = {
+    searchFormValues: {
+        userLatitude: string,
+        userLongitude: string,
+        date: Date
+    }
+}

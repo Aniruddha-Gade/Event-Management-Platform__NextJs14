@@ -208,10 +208,10 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
                 const weather = await getWeather(event.location, event.startDateTime);
                 const distance = await calculateDistance(userLatitude, userLongitude, event.eventLatitude, event.eventLongitude);
 
-                console.log({
-                    weather: weather,
-                    distance: distance,
-                })
+                // console.log({
+                //     weather: weather,
+                //     distance: distance,
+                // })
 
                 return {
                     event_name: event.title,
@@ -238,6 +238,6 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
         console.log("final response = ", response)
         return response.events
     } catch (error) {
-
+        console.log('Error while fetching next 14 events =', error);
     }
 }
