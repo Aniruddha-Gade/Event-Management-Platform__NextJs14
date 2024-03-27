@@ -1,33 +1,20 @@
 
 "use client"
 
-import { useState } from 'react'
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage, } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { searchEventDefaultValues } from '../../constants/index'
 import { searchEventFormSchema } from '@/lib/validator'
-import { useUploadThing } from '@/lib/uploadthing'
-import { IEvent } from "@/lib/database/models/event.model"
-
-import DropDown from '@/components/shared/DropDown'
-import { FileUploader } from "./FileUploader"
-import { createEvent } from '../../lib/actions/event.actions'
-
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Link from 'next/link'
-
+import { getEventsBySearch } from "@/lib/actions/event.actions"
 
 
 
@@ -64,7 +51,12 @@ const SearchEventForm = () => {
 
     // handle form SUBMIT
     async function onSubmit(values: z.infer<typeof searchEventFormSchema>) {
-        console.log("submited search-form values => ", values)
+        // console.log("submited search-form values => ", values)
+        const data = await getEventsBySearch({
+            searchFormValues: { ...values }
+        })
+
+        console.log("searched data => ", data)
     }
 
 
@@ -173,9 +165,4 @@ const SearchEventForm = () => {
     );
 }
 
-// <Button size='lg' asChild className='rounded-full h-[54px] p-regular-16 w-full sm:w-fit' >
-//     <Link href='#events'>
-//         Search Event
-//     </Link>
-// </Button>
 export default SearchEventForm;
