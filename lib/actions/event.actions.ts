@@ -225,6 +225,9 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
                     date: event.date,
                     weather,
                     distance_km: distance,
+
+                    imageUrl: event.imageUrl,
+                    eventId: event._id.toString()
                 };
             })
         }
