@@ -54,7 +54,7 @@ const EventCard2 = ({ event }: { event: EventData }) => {
                             className='object-contain'
                         />
                         <span className='font-medium'>Distance from you: </span>
-                        {JSON.parse(event.distance_km).toFixed(2)} km
+                        {parseFloat(event.distance_km).toFixed(2) + ' km'}
                     </div>
                 </div>
             </div>
@@ -63,16 +63,3 @@ const EventCard2 = ({ event }: { event: EventData }) => {
 }
 
 export default EventCard2;
-
-{/* <Image
-                src={event.imageUrl}
-                width={300}
-                height={300}
-                alt={event.event_name}
-            />
-
-            <p>{event.event_name}</p>
-            <p>{event.city_name}</p>
-            <p>{formatDateTime(event.date).dateOnly}</p>
-            <p>{event.weather}</p>
-            <p>{event.distance_km}</p> */}
