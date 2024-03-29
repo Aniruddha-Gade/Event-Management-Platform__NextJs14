@@ -31,23 +31,23 @@ const page = () => {
             <section>
                 <h3 className='text-4xl text-primary py-5 md:py-10 font-bold'>Events </h3>
 
-                <p>
+                <div>
                     {
                         searchEventLoading ? (
                             <span className='text-7xl bg-red-800 underline text-teal-500 p-5'>
                                 Loading
                             </span>
                         ) : searchEventData.length > 0 ? (
-                            <span className='text-7xl text-red-800 underline bg-lime-500 p-5'>
-                                Loaded
-                            </span>
+                            <div>
+                                
+                            </div>
                         ) : (
                             <span className='text-7xl text-red-800 underline bg-lime-500 p-5'>
                                 Not Found
                             </span>
                         )
                     }
-                </p>
+                </div>
 
 
             </section>
