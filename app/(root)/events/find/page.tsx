@@ -5,6 +5,19 @@ import { useSearchEventContext } from '@/app/context/searchEventContext';
 import EventCard2 from '@/components/shared/EventCard2';
 
 
+// Loading Skeleton
+const LoadingSkeleton = () => {
+    return (
+        <div className="min-h-[380px] md:min-h-[438px] w-full max-w-[400px] flex flex-col gap-4 rounded-xl shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] p-3 bg-white hover:cursor-wait">
+            <div className="skeleton w-full rounded-xl h-[200px] "></div>
+
+            <div className="skeleton rounded-xl w-20 h-5"></div>
+            <div className="skeleton rounded-xl w-56 h-5"></div>
+            <div className="skeleton rounded-xl w-32 h-5"></div>
+        </div>
+    )
+}
+
 
 const page = () => {
 
@@ -53,10 +66,10 @@ const page = () => {
 
                 <div>
                     {
+                        // display loading until data not loaded
                         searchEventLoading ? (
-                            <div className='flex-center wrapper min-h-[200px] w-full flex-col gap-3 rounded-[14px] bg-grey-500/20 py-28 text-center'>
-                                <h3 className='p-bold-20 md:h5-bold'>Events Not Found..!</h3>
-                                <p className='p-regular-14'>Please update date</p>
+                            <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10'>
+                                {Array.from({ length: 6 }, (_, index) => <LoadingSkeleton key={index} />)}
                             </div>
                         ) : tempData.length > 0 ? (
                             <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10'>
@@ -67,18 +80,14 @@ const page = () => {
                                 }
                             </div>
                         ) : (
-                            <span className='text-7xl text-red-800 underline bg-lime-500 p-5'>
-                                Not Found
-                            </span>
+                            <div className='flex-center wrapper min-h-[200px] w-full flex-col gap-3 rounded-[14px] bg-grey-500/20 py-28 text-center'>
+                                <h3 className='p-bold-20 md:h5-bold'>Events Not Found..!</h3>
+                                <p className='p-regular-14'>Please update date</p>
+                            </div>
                         )
                     }
                 </div>
-
-
             </section>
-
-
-
         </div>
     );
 }
