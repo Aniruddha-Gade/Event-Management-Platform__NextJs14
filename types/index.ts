@@ -161,4 +161,6 @@ export type EventData = {
     date: Date;
     weather: string;
     distance_km: string;
+    imageUrl:string,
+    eventId:string,
 }
