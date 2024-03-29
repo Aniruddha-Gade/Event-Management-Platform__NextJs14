@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import SearchEventForm from '@/components/shared/SearchEventForm';
 import { useSearchEventContext } from '@/app/context/searchEventContext';
+import EventCard2 from '@/components/shared/EventCard2';
 
 
 
@@ -9,7 +10,26 @@ const page = () => {
 
     const { searchEventData, searchEventLoading } = useSearchEventContext()
     console.log("from context searchEventData = ", searchEventData)
-
+    const tempData = [
+        {
+            event_name: 'Smart India Hackathon 2024',
+            city_name: 'Delhi',
+            date: '2024-04-05T11:00:53.000Z',
+            weather: 'Sunny, 18C',
+            distance_km: '1143.6432140846102',
+            imageUrl: 'https://utfs.io/f/e673ddfd-10c3-4034-a6c5-041d52a9d0ba-5hcmx7.png',
+            eventId: '66069fdf1f3cdea91919cbe7'
+        },
+        {
+            event_name: 'Patna Festival 2024',
+            city_name: 'Patna',
+            date: '2024-04-06T11:00:53.000Z',
+            weather: 'Sunny, 18C',
+            distance_km: '1443.9477535510216',
+            imageUrl: 'https://utfs.io/f/9a245f91-fda6-4f98-ad30-e29551526f56-5hcnlf.png',
+            eventId: '6606a03b1f3cdea91919cbef'
+        }
+    ]
 
 
     return (
@@ -37,9 +57,13 @@ const page = () => {
                             <span className='text-7xl bg-red-800 underline text-teal-500 p-5'>
                                 Loading
                             </span>
-                        ) : searchEventData.length > 0 ? (
-                            <div>
-                                
+                        ) : tempData.length > 0 ? (
+                            <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10'>
+                                {
+                                    tempData.map((event) => (
+                                        <EventCard2 event={event} />
+                                    ))
+                                }
                             </div>
                         ) : (
                             <span className='text-7xl text-red-800 underline bg-lime-500 p-5'>
