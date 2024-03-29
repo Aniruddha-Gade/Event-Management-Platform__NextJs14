@@ -11,8 +11,7 @@ export const eventFormSchema = z.object({
   eventLongitude: z.string().min(2, 'Longitude must be at least 2').max(50, 'Longitude must be at most 50'),
 
   imageUrl: z.string(),
-  startDateTime: z.date(),
-  endDateTime: z.date(),
+  date: z.date(),
   categoryId: z.string(),
   price: z.string(),
   isFree: z.boolean(),

@@ -142,7 +142,7 @@ const SearchEventForm = () => {
                                             className='filter-grey'
                                         />
 
-                                        <p className='ml-3 whitespace-nowrap text-grey-600 '>Start Date:</p>
+                                        <p className='ml-3 whitespace-nowrap text-grey-600 '>Date :</p>
                                         <DatePicker
                                             selected={field.value}
                                             onChange={(date: Date) => field.onChange(date)}

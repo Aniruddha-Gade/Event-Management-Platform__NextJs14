@@ -10,8 +10,7 @@ export interface IEvent extends Document {
     eventLongitude:string,
     createdAt: Date;
     imageUrl: string;
-    startDateTime: Date;
-    endDateTime: Date;
+    date: Date;
     price: string;
     isFree: boolean;
     url?: string;
@@ -45,11 +44,7 @@ const eventSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    startDateTime: {
-        type: Date,
-        default: Date.now
-    },
-    endDateTime: {
+    date: {
         type: Date,
         default: Date.now
     },

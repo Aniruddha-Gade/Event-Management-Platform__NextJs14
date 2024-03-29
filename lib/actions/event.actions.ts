@@ -151,8 +151,8 @@ async function findEvents(date: Date) {
         // })
 
         const events = await Event.find({
-            startDateTime: { $gte: startDate, $lte: endDate }
-        }).sort({ startDateTime: 1 }); // Sort in ascending order of startDateTime
+            date: { $gte: startDate, $lte: endDate }
+        }).sort({ date: 1 }); // Sort in ascending order of date
 
         return events;
     } catch (error) {
@@ -210,7 +210,7 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
         let eventDetailsPromises: Promise<any>[] = []
         if (events) {
             eventDetailsPromises = events.map(async (event) => {
-                const weather = await getWeather(event.location, event.startDateTime);
+                const weather = await getWeather(event.location, event.date);
                 const distance = await calculateDistance(userLatitude, userLongitude, event.eventLatitude, event.eventLongitude);
 
                 // console.log({
@@ -221,7 +221,7 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
                 return {
                     event_name: event.title,
                     city_name: event.location,
-                    date: event.startDateTime,
+                    date: event.date,
                     weather,
                     distance_km: distance,
                 };
