@@ -269,9 +269,9 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                                         <DatePicker
                                             selected={field.value}
                                             onChange={(date: Date) => field.onChange(date)}
-                                            showTimeSelect
-                                            timeInputLabel="Time:"
-                                            dateFormat="MM/dd/yyyy h:mm aa"
+                                            // showTimeSelect
+                                            // timeInputLabel="Time:"
+                                            dateFormat="dd/MM/yyyy"
                                             wrapperClassName="datePicker cursor-pointer"
                                         />
                                     </div>
