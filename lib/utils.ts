@@ -45,6 +45,15 @@ export const formatDateTime = (dateString: Date) => {
   }
 }
 
+export const formatDate = (dateString: Date) => {
+  const date = new Date(dateString);
+
+  // Extract the date part
+  const formattedDate = date.toISOString().split('T')[0];
+  return formattedDate;
+};
+
+
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file)
 
 export const formatPrice = (price: string) => {

@@ -5,7 +5,7 @@ import { connectToDatabase } from "@/lib/database";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
 import Category from "@/lib/database/models/category.model";
-import { handleError } from "../utils";
+import { formatDate, formatDateTime, handleError } from "../utils";
 import { revalidatePath } from "next/cache";
 
 import axios from 'axios';
@@ -168,7 +168,8 @@ async function getWeather(city: string, date: Date) {
         //     date:date
         // }))
 
-        const apiUrl = `${weatherApiUrl}&city=${encodeURIComponent(city)}&date=${date}`;
+        const newDate = formatDate(date)
+        const apiUrl = `${weatherApiUrl}&city=${city}%20Rebeccaberg&date=${newDate}`;
 
         const response = await axios.get(apiUrl);
         // console.log(`weather of ${city} => `, response.data.weather)
@@ -210,13 +211,13 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
         let eventDetailsPromises: Promise<any>[] = []
         if (events) {
             eventDetailsPromises = events.map(async (event) => {
-                const weather = await getWeather(event.location, event.date);
+                const weather = await getWeather(event.location, date);
                 const distance = await calculateDistance(userLatitude, userLongitude, event.eventLatitude, event.eventLongitude);
 
-                // console.log({
-                //     weather: weather,
-                //     distance: distance,
-                // })
+                console.log({
+                    weather: weather,
+                    distance: distance,
+                })
 
                 return {
                     event_name: event.title,
