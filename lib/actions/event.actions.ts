@@ -214,10 +214,10 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
                 const weather = await getWeather(event.location, date);
                 const distance = await calculateDistance(userLatitude, userLongitude, event.eventLatitude, event.eventLongitude);
 
-                console.log({
-                    weather: weather,
-                    distance: distance,
-                })
+                // console.log({
+                //     weather: weather,
+                //     distance: distance,
+                // })
 
                 return {
                     event_name: event.title,
