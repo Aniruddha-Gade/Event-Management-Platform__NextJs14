@@ -23,6 +23,7 @@ const LoadingSkeleton = () => {
 const page = () => {
 
     const { searchEventData, searchEventLoading } = useSearchEventContext()
+    if(searchEventData.events.length > 0)
     console.log("search Event Data = ", searchEventData)
 
 
@@ -31,9 +32,9 @@ const page = () => {
 
             <section className='ng-pattern-dotted bg-contain py-5 md:py-10 '>
                 <div className='max-w-7xl  w-full flex flex-col lg:flex-row gap-5'>
-                    <div className='flex flex-col justify-center gap-8'>
+                    <div className='flex flex-col justify-center gap-8 w-full'>
                         <h1 className='font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px] xl:text-[58px] xl:leading-[74px]'>
-                            Discover, Organize,<br /> Connect: Elevate Your Event Experience Today!
+                            Discover, Organize,<br /> Connect: Find Your Next 14 Events!
                         </h1>
 
                     </div>
@@ -52,11 +53,11 @@ const page = () => {
                             <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10'>
                                 {Array.from({ length: 6 }, (_, index) => <LoadingSkeleton key={index} />)}
                             </div>
-                        ) : searchEventData.length > 0 ? (
+                        ) : searchEventData?.events?.length > 0 ? (
                             <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10'>
                                 {
-                                    searchEventData.map((event) => (
-                                        <EventCard2 event={event} />
+                                    searchEventData.events.map((event) => (
+                                        <EventCard2 event={event} key={event.eventId}/>
                                     ))
                                 }
                             </div>
