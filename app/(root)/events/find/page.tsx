@@ -23,8 +23,9 @@ const LoadingSkeleton = () => {
 const page = () => {
 
     const { searchEventData, searchEventLoading } = useSearchEventContext()
-    if(searchEventData.events.length > 0)
-    console.log("search Event Data = ", searchEventData)
+    if (searchEventData.events.length) {
+        console.log("search Event Data = ", searchEventData)
+    }
 
 
     return (
@@ -36,7 +37,6 @@ const page = () => {
                         <h1 className='font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px] xl:text-[58px] xl:leading-[74px]'>
                             Discover, Organize,<br /> Connect: Find Your Next 14 Events!
                         </h1>
-
                     </div>
 
                     <SearchEventForm />
@@ -57,7 +57,7 @@ const page = () => {
                             <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10'>
                                 {
                                     searchEventData.events.map((event) => (
-                                        <EventCard2 event={event} key={event.eventId}/>
+                                        <EventCard2 event={event} key={event.eventId} />
                                     ))
                                 }
                             </div>
