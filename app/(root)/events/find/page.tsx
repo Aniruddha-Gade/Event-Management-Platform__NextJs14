@@ -35,7 +35,8 @@ const page = () => {
                 <div className='max-w-7xl  w-full flex flex-col lg:flex-row gap-5'>
                     <div className='flex flex-col justify-center gap-8 w-full'>
                         <h1 className='font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px] xl:text-[58px] xl:leading-[74px]'>
-                            Discover, Organize,<br /> Connect: Find Your Next 14 Events!
+                            Discover, Organize,<br /> Connect: Find Your 
+                            <span className='text-primary'> Next 14 Events!</span>
                         </h1>
                     </div>
 

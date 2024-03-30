@@ -21,10 +21,11 @@ import { IEvent } from "@/lib/database/models/event.model"
 
 import DropDown from '@/components/shared/DropDown'
 import { FileUploader } from "./FileUploader"
-import { createEvent } from '../../lib/actions/event.actions'
+import { createEvent, updateEvent } from '../../lib/actions/event.actions'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import UpdateEvent from '@/app/(root)/events/[id]/update/page'
 
 // type
 type EventFormProps = {
@@ -34,7 +35,7 @@ type EventFormProps = {
     eventId?: string
 }
 
-const EventForm = ({ userId, type }: EventFormProps) => {
+const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
 
     const [files, setFiles] = useState<File[]>([])
     const [startDate, setStartDate] = useState(new Date());
@@ -48,7 +49,10 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
-        defaultValues: initialValues
+        defaultValues: event && type === 'Update' ? {
+            ...event,
+            date: new Date(event.date)
+        } : initialValues
     })
 
     // handle location acesss
@@ -85,6 +89,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
             uploadImageUrl = uploadImages[0].url;
         }
 
+        // create event
         if (type === 'Create') {
             try {
                 const newEvent = await createEvent({
@@ -92,17 +97,42 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                     userId,
                     path: '/profile'
                 });
-                console.log("Event created successfully 🎉", newEvent)
                 if (newEvent) {
+                    console.log("Event created successfully 🎉", newEvent)
                     form.reset();
                     router.push(`/events/${newEvent._id}`)
+                } else {
+                    console.log("Event NOT created")
                 }
             } catch (error) {
                 console.log('Error while creating event:', error);
             }
         }
 
-
+        // update event
+        if (type === 'Update') {
+            try {
+                if (!eventId) {
+                    router.back();
+                    return;
+                }
+                const updatedEvent = await updateEvent({
+                    event: { ...values, imageUrl: uploadImageUrl, _id: eventId },
+                    userId,
+                    path: `/events/${eventId}`
+                });
+                if (updatedEvent) {
+                    console.log("Event updated successfully 🎉", updatedEvent)
+                    form.reset();
+                    router.push(`/events/${updatedEvent._id}`)
+                }
+                else {
+                    console.log("Event NOT updated")
+                }
+            } catch (error) {
+                console.log('Error while creating event:', error);
+            }
+        }
     }
 
     return (

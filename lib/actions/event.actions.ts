@@ -1,6 +1,6 @@
 "use server";
 
-import { CreateEventParams, DeleteEventParams, GetAllEventsParams, SearchEventData, getEventsBySearchParams } from "@/types";
+import { CreateEventParams, DeleteEventParams, GetAllEventsParams, SearchEventData, UpdateEventParams, getEventsBySearchParams } from "@/types";
 import { connectToDatabase } from "@/lib/database";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
@@ -248,5 +248,30 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
         return response
     } catch (error) {
         console.log('Error while fetching next 14 events =', error);
+    }
+}
+
+
+// update event
+export async function updateEvent({ userId, event, path }: UpdateEventParams) {
+    try {
+        await connectToDatabase()
+
+        // Ensure user is authorized to update the event
+        const eventToUpdate = await Event.findById(event._id)
+        if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
+            throw new Error('Unauthorized or event not found')
+        }
+
+        const updatedEvent = await Event.findByIdAndUpdate(
+            event._id,
+            { ...event, category: event.categoryId },
+            { new: true }
+        )
+        revalidatePath(path)
+
+        return JSON.parse(JSON.stringify(updatedEvent))
+    } catch (error) {
+        handleError(error)
     }
 }
