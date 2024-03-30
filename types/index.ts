@@ -161,6 +161,14 @@ export type EventData = {
     date: Date;
     weather: string;
     distance_km: string;
-    imageUrl:string,
-    eventId:string,
+    imageUrl: string,
+    eventId: string,
+}
+
+export type SearchEventData = {
+    events: EventData[],
+    page: number,
+    pageSize: number,
+    totalEvents: number,
+    totalPages: number,
 }

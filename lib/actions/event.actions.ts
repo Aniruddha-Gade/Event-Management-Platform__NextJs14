@@ -1,6 +1,6 @@
 "use server";
 
-import { CreateEventParams, DeleteEventParams, GetAllEventsParams, getEventsBySearchParams } from "@/types";
+import { CreateEventParams, DeleteEventParams, GetAllEventsParams, SearchEventData, getEventsBySearchParams } from "@/types";
 import { connectToDatabase } from "@/lib/database";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
@@ -235,7 +235,7 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
         // Wait for all API calls to complete
         const eventDetails = await Promise.all(eventDetailsPromises);
 
-        const response = {
+        const response: SearchEventData = {
             events: eventDetails,
             page: 1,
             pageSize: 10,
@@ -245,7 +245,7 @@ export const getEventsBySearch = async ({ searchFormValues }: getEventsBySearchP
 
         // Send the response
         console.log("final response = ", response)
-        return response.events
+        return response
     } catch (error) {
         console.log('Error while fetching next 14 events =', error);
     }

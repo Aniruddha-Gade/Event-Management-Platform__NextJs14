@@ -58,12 +58,14 @@ const SearchEventForm = () => {
         const data = await getEventsBySearch({
             searchFormValues: { ...values }
         })
-        if (data) {
+        if (data && data.events && data.events.length > 0) {
             setSearchEventData(data);
-            // console.log("searched data => ", data)
+            // console.log("searched data => ", data.events)
         } else {
-            setSearchEventData([]);
             console.log("Data not found")
+            setSearchEventData({
+                events: [], page: 0, pageSize: 0, totalEvents: 0, totalPages: 0
+            });
         }
         setSearchEventLoading(false)
     }
