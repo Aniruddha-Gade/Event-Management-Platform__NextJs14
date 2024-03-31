@@ -24,7 +24,7 @@ Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React
 | [Features](#features-)             | 💻🔧 Features of the project         |
 | [Schema](#schema-)                  | 🗂 Explanation of data schemas used          |
 | [React Hooks](#react-hooks-)            | 🎣 Overview of React Hooks utilized          |
-| [React Library](#react-library-)         | ⚛️📚 Overview of React Libraries used        |
+| [Acknowledgements](#acknowledgements-)         | ⚛️📚 Overview of React Libraries used        |
 | [Screen Preview](#screen-preview-)         | 🖥️ Screen Preview        |
 
 
@@ -50,7 +50,7 @@ Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React
 
 
 
-## Features
+## Features: 🚀
 
 - **Authentication**: 🔒 Secure user authentication using Clerk.
 - **Event CRUD operation**: ✏️ Create, edit, and delete events with ease.
@@ -61,7 +61,7 @@ Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React
 
 
 
-## Getting Started
+## Getting Started: 💡
 
 ### Prerequisites
 - NextJS 
@@ -70,25 +70,25 @@ Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React
 
 ### Installation
 
-1. Clone the repository:
+1. Clone the repository: 🔍 
 
    ```bash
    git clone https://github.com/Aniruddha-Gade/Event-Management-Platform__NextJs14.git
    ```
 
-2. Navigate to the project directory:
+2. Navigate to the project directory: 📂
 
    ```bash
    cd my-app
    ```
 
-3. Install dependencies:
+3. Install dependencies: ⚙️
 
    ```bash
    npm install
    ```
 
-4. Set up environment variables:
+4. Set up environment variables: 🔧
 
    Create a `.env` file in the root directory and add the following:
 
@@ -124,7 +124,7 @@ Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React
 
 
 
-5. Run the development server:
+5. Run the development server: 🚀
 
    ```bash
    npm run dev
@@ -132,19 +132,18 @@ Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Contributing
+## Contributing: 🤝
 
 Contributions are welcome! 
 
-## License
+## License 📝
 
 
-## Acknowledgements
 
-- **Clerk**: For providing user authentication.
-- **Stripe**: For payment processing.
-- **Next.js**: For building modern web applications with React.
-- **Tailwind CSS**: For fast and responsive UI development.
-- **MongoDB**: For flexible and scalable data storage.
+## Acknowledgements 🙏
 
-
+- **Clerk**: 🔒 For providing user authentication.
+- **Stripe**: 💳 For payment processing.
+- **Next.js**: ⚛️ For building modern web applications with React.
+- **Tailwind CSS**: 🎨 For fast and responsive UI development.
+- **MongoDB**: 📊 For flexible and scalable data storage.
