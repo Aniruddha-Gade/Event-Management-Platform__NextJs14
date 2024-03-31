@@ -1,5 +1,5 @@
 
-<img height="200" src='https://github.com/Aniruddha-Gade/Event-Management-Platform__NextJs14/blob/main/screenshots/eventify-logo.png' />
+<img height="150" src='https://github.com/Aniruddha-Gade/Event-Management-Platform__NextJs14/blob/main/screenshots/eventify-logo.png' />
 
 # Project Description 📝
 Eventify is a full-stack Event Management Platform. <br/>
