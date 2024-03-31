@@ -2,7 +2,7 @@
 <img height="150" src='https://github.com/Aniruddha-Gade/Event-Management-Platform__NextJs14/blob/main/screenshots/eventify-logo.png' />
 
 # Project Description 📝
-Eventify is a full-stack Event Management Platform. <br/>
+Eventify is a full-stack **Event Management Platform.** <br/>
 It provides features such as authentication, event management, search, filtering, categories, checkout, and payments. <br/>
 Built with modern technologies including Next.js 14, Tailwind CSS, Shadcn, React Hook Form, Zod, Uploadthing, React-Datepicker, Mongoose, Clerk, and Stripe.
 
