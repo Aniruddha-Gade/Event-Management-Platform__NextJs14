@@ -1,5 +1,6 @@
 
-import { getEventDetailsById, } from '@/lib/actions/event.actions'
+import Collection from '@/components/shared/Collection';
+import { getEventDetailsById, getRelatedEventsByCategory, } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
 import Image from 'next/image';
@@ -10,6 +11,13 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
     // get event data by ID
     const event = await getEventDetailsById(id);
     console.log("Event details => ", event)
+
+    const relatedEvents = await getRelatedEventsByCategory({
+        categoryId: event.category._id,
+        eventId: event._id,
+        page: searchParams.page as string,
+    })
+    console.log(`related Events for category - ${event.category.name} =>  ${relatedEvents}`)
 
 
 
@@ -77,6 +85,16 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
             {/* EVENTS with the same category */}
             <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
                 <h2 className="h2-bold">Related Events</h2>
+
+                <Collection
+                    data={relatedEvents?.data}
+                    emptyTitle="No Events Found"
+                    emptyStateSubText="Come back later"
+                    collectionType="All_Events"
+                    limit={3}
+                    page={searchParams.page as string}
+                    totalPages={relatedEvents?.totalPages}
+                />
 
 
             </section>
